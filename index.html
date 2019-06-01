@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <style>
+            canvas{
+                display:block;
+                margin:100 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas width="300" height="300" id="clock"></canvas>
+    </body>
+    <script>
+        init();
+        function init(){
+            let canvas = document.querySelector("#clock");
+            let ctx = canvas.getContext("2d");
+            setInterval(function(){
+                ctx.clearRect(0,0,300,300);
+                ballRun(ctx)
+            },50)
+        };
+        function ballRun(ctx){
+            let oDate = new Date();
+            let sData = oDate.getSeconds();
+            let seData = oDate.getMilliseconds();
+            let PI2 = Math.PI;
+            ctx.save();
+            ctx.fillStyle="#ff0000";
+            ctx.translate(150,150);
+            ctx.beginPath();
+            ctx.arc(0,0,50,0,PI2*2);
+            ctx.fill()
+            ctx.closePath();
+            ctx.restore();
+
+            line(ctx,100);
+            lineRun(ctx,20,70,70,"blue",sData,seData,30);
+            line(ctx,130);
+            lineRun(ctx,10,92,92,"green",sData,seData,20);
+            line(ctx,150);
+            lineRun(ctx,10,106,106,"red",sData,seData,10);
+        };
+        function line(ctx,length){
+            let PI2 = Math.PI;
+            ctx.save();
+            ctx.translate(150,150);
+            ctx.beginPath();
+            ctx.arc(0,0,length,0,PI2*2);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.restore();
+        }
+        function lineRun(ctx,size,wx,wy,color,i,i2,rate){
+            let PI2 = Math.PI;
+            ctx.save();
+            ctx.translate(150,150);
+            ctx.rotate(i*PI2/rate+i2*PI2/(rate*1000))
+            ctx.fillStyle=color;
+            ctx.beginPath();
+            ctx.arc(wx,wy,size,0,PI2*2);
+            ctx.fill()
+            ctx.closePath();
+            ctx.restore();
+        }
+    </script>
+</html>
